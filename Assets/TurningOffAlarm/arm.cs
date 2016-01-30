@@ -4,6 +4,7 @@ using System.Collections;
 public class arm : MonoBehaviour {
     private bool follow = false;
     private Rigidbody2D rb;
+    private Vector3 mousePos;
 
     void Start()
     {
@@ -20,11 +21,13 @@ public class arm : MonoBehaviour {
 
     void Update()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = new Vector3(mousePos.x, mousePos.y, 0f);
         if (Input.GetMouseButtonUp(0))
             follow = false;
 
         if (follow)
-            rb.velocity = (-transform.position + new Vector3(-Screen.width / 2 + Input.mousePosition.x, -Screen.height / 2 + Input.mousePosition.y, 0))*5f;
+            rb.velocity = (-transform.position + mousePos)*5f;
 
         if (transform.position.x > 30f)
             transform.position = new Vector3(30f,transform.position.y, transform.position.z);
