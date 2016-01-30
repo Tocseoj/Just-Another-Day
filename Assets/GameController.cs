@@ -24,8 +24,7 @@ public class GameController : MonoBehaviour {
     public void NextScene()
     {
         currentScene = currentScene + 1;
-
-        if (currentScene > SceneManager.sceneCount-1)
+        if (currentScene > SceneManager.sceneCountInBuildSettings)
         {
             currentScene = 1;
             SceneManager.LoadScene(currentScene);

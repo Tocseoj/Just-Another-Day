@@ -9,6 +9,8 @@ public class Alarm : MonoBehaviour {
     public int currentSprite = 0;
     public Sprite[] frames;
     private int changeEveryFrames;
+    public float nextSceneIn = 2f;
+    public float timeTillNext;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +29,14 @@ public class Alarm : MonoBehaviour {
             else
             {
                 changeEveryFrames++;
+            }
+        }
+        else
+        {
+            timeTillNext += Time.deltaTime;
+            if (timeTillNext >= nextSceneIn)
+            {
+                GameController.control.NextScene();
             }
         }
 	}
