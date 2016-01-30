@@ -23,7 +23,7 @@ public class CoffeeCup : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.tag == "Coffee") {
 			count--;
-			Debug.Log("Count: " + count);
+			// Debug.Log("Count: " + count);
 		}
 	}
 }

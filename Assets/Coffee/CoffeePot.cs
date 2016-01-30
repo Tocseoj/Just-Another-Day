@@ -8,7 +8,6 @@ public class CoffeePot : MonoBehaviour {
 	public int totalCoffeeAmt = 100;
 
 	public Transform coffeePourPrefab;
-	//public PolygonCollider2D FlowerCollider;
 
 	Vector3 mousePos;
 	bool held = false;
@@ -16,9 +15,11 @@ public class CoffeePot : MonoBehaviour {
 
 	TargetJoint2D joint;
 	Transform spout;
+	private	AudioSource audioSource;
 
 	void Awake() {
 		joint = GetComponent<TargetJoint2D>();
+		audioSource = GetComponent<AudioSource>();
 		spout = transform.GetChild(0);
 		timer = Time.time;
 	}
@@ -36,7 +37,10 @@ public class CoffeePot : MonoBehaviour {
 
 		// Debug.Log("Z Rotation: " + transform.rotation.z);
 		if (transform.rotation.eulerAngles.z > 200f && transform.rotation.eulerAngles.z < 333f) {
+			audioSource.UnPause();
 			PourCoffee();
+		} else {
+			audioSource.Pause();
 		}
 	}
 
@@ -58,6 +62,7 @@ public class CoffeePot : MonoBehaviour {
 				totalCoffeeAmt--;
 			} else {
 				Debug.Log("OUT OF COFFEE!");
+				audioSource.Stop();
 			}
 			timer = Time.time;
 		}

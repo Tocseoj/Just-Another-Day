@@ -13,11 +13,13 @@ public class PencilSharpener : MonoBehaviour {
 	bool isUp = true;
 	int turnCounter = 0;
 	Transform lever;
+	AudioSource audioSource;
 	public int rotationsNeeded = 6;
 
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
 		lever = GameObject.Find("HandleParent").transform;
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
@@ -52,9 +54,11 @@ public class PencilSharpener : MonoBehaviour {
 			if (transform.position.y > upperBound - 0.1f && !isUp) {
 				isUp = true;
 				turnCounter++;
+				audioSource.Play();
 			} else if (transform.position.y < lowerBound + 0.1f && isUp) {
 				isUp = false;
 				turnCounter++;
+				audioSource.Play();
 			}
 			rb.MovePosition(Vector2.Lerp(transform.position, new Vector2(transform.position.x, Mathf.Clamp(mousePos.y + offset.y, lowerBound, upperBound)), Time.deltaTime * movementSpeed));
 
