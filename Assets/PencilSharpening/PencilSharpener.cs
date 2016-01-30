@@ -8,11 +8,16 @@ public class PencilSharpener : MonoBehaviour {
 	Vector3 mousePos;
 	Rigidbody2D rb;
 	public float movementSpeed = 10f;
-	public float upperBound = 100f;
+	public float upperBound;
 	public float lowerBound;
+	bool isUp = true;
+	int turnCounter = 0;
+	Transform lever;
+	public int rotationsNeeded = 6;
 
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
+		lever = GameObject.Find("HandleParent").transform;
 	}
 
 	// Update is called once per frame
@@ -20,6 +25,11 @@ public class PencilSharpener : MonoBehaviour {
 		if (engaged) {
 			mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			mousePos = new Vector3 (mousePos.x, mousePos.y, 0f);
+		}
+
+		if (turnCounter >= rotationsNeeded) {
+			Debug.Log("VICTORY!");
+			turnCounter = 0;
 		}
 	}
 
@@ -39,8 +49,16 @@ public class PencilSharpener : MonoBehaviour {
 
 	void OnMouseDrag() {
 		if (engaged) {
-			Debug.Log("mousePos X: " + mousePos.x + " Y: " + mousePos.y);
-			rb.MovePosition(Vector2.Lerp(transform.position, mousePos + offset, Time.deltaTime * movementSpeed));
+			if (transform.position.y > upperBound - 0.1f && !isUp) {
+				isUp = true;
+				turnCounter++;
+			} else if (transform.position.y < lowerBound + 0.1f && isUp) {
+				isUp = false;
+				turnCounter++;
+			}
+			rb.MovePosition(Vector2.Lerp(transform.position, new Vector2(transform.position.x, Mathf.Clamp(mousePos.y + offset.y, lowerBound, upperBound)), Time.deltaTime * movementSpeed));
+
+			lever.localScale = new Vector3(1f, ((((transform.position.y - lowerBound) / (upperBound - lowerBound)) - 0.5f) * 2f), 1f);
 		}
 	}
 }

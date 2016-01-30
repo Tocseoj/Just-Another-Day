@@ -19,6 +19,8 @@ public class PencilSharpening : MonoBehaviour {
 
 		mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		mousePos = new Vector3 (mousePos.x, mousePos.y, 0f);
+		// Debug.Log("mousePos X: " + mousePos.x + " Y: " + mousePos.y);
+
 		// transform.position = Vector3.MoveTowards(transform.position, mousePos, movementSpeed * Time.deltaTime);
 	}
 
