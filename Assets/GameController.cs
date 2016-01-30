@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour {
     public static GameController control;
     public float playerScore;
     public int currentScene = 0;
-    
+
     void Awake()
     {
         if (control == null || control != this)
