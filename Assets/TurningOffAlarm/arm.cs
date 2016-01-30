@@ -4,7 +4,6 @@ using System.Collections;
 public class arm : MonoBehaviour {
     private bool follow = false;
     private Rigidbody2D rb;
-    public GameObject AlarmButton;
 
     void Start()
     {
