@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PencilSharpening : MonoBehaviour {
 
-	public float movementSpeed = 1f;
+	public float movementSpeed = 10f;
 
 	Vector3 offset;
 	Vector3 mousePos;
