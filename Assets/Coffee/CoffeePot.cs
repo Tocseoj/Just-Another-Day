@@ -5,53 +5,61 @@ public class CoffeePot : MonoBehaviour {
 
 	public float movementSpeed = 10f;
 	public float rotationSpeed = 1f;
+	public int totalCoffeeAmt = 100;
 
-	Vector3 offset;
+	public Transform coffeePourPrefab;
+	//public PolygonCollider2D FlowerCollider;
+
 	Vector3 mousePos;
 	bool held = false;
+	float timer;
 
-	Rigidbody2D rb;
+	TargetJoint2D joint;
+	Transform spout;
 
 	void Awake() {
-		rb = GetComponent<Rigidbody2D>();
+		joint = GetComponent<TargetJoint2D>();
+		spout = transform.GetChild(0);
+		timer = Time.time;
 	}
 
-	// Update is called once per frame
 	void Update () {
 
 		mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		mousePos = new Vector3 (mousePos.x, mousePos.y, 0f);
-		// Debug.Log("mousePos X: " + mousePos.x + " Y: " + mousePos.y);
-
-		if (!held) {
-			if (Input.GetKey(KeyCode.D)) {
-				rb.MoveRotation(rb.rotation - rotationSpeed);
-			} else if (Input.GetKey(KeyCode.A)) {
-				rb.MoveRotation(rb.rotation + rotationSpeed);
+		if (held) {
+			if (joint != null) {
+				joint.target = mousePos;
 			}
+
 		}
 
-		if (transform.rotation.z > 180 && transform.rotation.z < 333) {
+		// Debug.Log("Z Rotation: " + transform.rotation.z);
+		if (transform.rotation.eulerAngles.z > 200f && transform.rotation.eulerAngles.z < 333f) {
 			PourCoffee();
 		}
-
-		// transform.position = Vector3.MoveTowards(transform.position, mousePos, movementSpeed * Time.deltaTime);
 	}
 
 	void OnMouseDown() {
-		offset = transform.position - mousePos;
 		held = true;
-	}
-
-	void OnMouseDrag() {
-		rb.MovePosition (Vector2.Lerp (transform.position, mousePos + offset, Time.deltaTime * movementSpeed));
+		joint.enabled = true;
 	}
 
 	void OnMouseUp() {
 		held = false;
+		joint.enabled = false;
 	}
 
 	void PourCoffee() {
-		Debug.Log("Pouring...");	
+		// Debug.Log("Pouring...");
+		if (timer < Time.time - 0.15f) {
+			if (totalCoffeeAmt > 0) {
+				Instantiate(coffeePourPrefab, spout.position, transform.rotation);
+				totalCoffeeAmt--;
+			} else {
+				Debug.Log("OUT OF COFFEE!");
+			}
+			timer = Time.time;
+		}
 	}
 }
