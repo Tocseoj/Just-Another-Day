@@ -4,14 +4,17 @@ using System.Collections;
 public class PencilSharpening : MonoBehaviour {
 
 	public float movementSpeed = 10f;
+	public Sprite sharpened;
 
 	Vector3 offset;
 	Vector3 mousePos;
 
 	Rigidbody2D rb;
+	SpriteRenderer sr;
 
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
+		sr = GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -30,5 +33,9 @@ public class PencilSharpening : MonoBehaviour {
 
 	void OnMouseDrag() {
 		rb.MovePosition (Vector2.Lerp (transform.position, mousePos + offset, Time.deltaTime * movementSpeed));
+	}
+
+	public void Sharpen() {
+		sr.sprite = sharpened;
 	}
 }

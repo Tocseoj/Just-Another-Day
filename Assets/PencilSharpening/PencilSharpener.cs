@@ -14,7 +14,9 @@ public class PencilSharpener : MonoBehaviour {
 	int turnCounter = 0;
 	Transform lever;
 	AudioSource audioSource;
+	PencilSharpening ps;
 	public int rotationsNeeded = 6;
+	bool sharpened = false;
 
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
@@ -32,14 +34,20 @@ public class PencilSharpener : MonoBehaviour {
 		if (turnCounter >= rotationsNeeded) {
 			Debug.Log("VICTORY!");
 			turnCounter = 0;
+			ps.Sharpen();
+			ps.enabled = true;
+			sharpened = true;
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag.Equals("Pencil")) {
-			other.attachedRigidbody.velocity = Vector2.zero;
-			other.GetComponent<PencilSharpening>().enabled = false;
-			engaged = true;
+			if (!sharpened) {
+				other.attachedRigidbody.velocity = Vector2.zero;
+				ps = other.GetComponent<PencilSharpening>();
+				ps.enabled = false;
+				engaged = true;
+			}
 		}
 	}
 
