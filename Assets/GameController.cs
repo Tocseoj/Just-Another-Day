@@ -54,14 +54,14 @@ public class GameController : MonoBehaviour {
     public void NextScene()
     {
         currentScene = currentScene + 1;
-		if (currentScene > SceneManager.sceneCountInBuildSettings - 1) {
+		if (currentScene > SceneManager.sceneCountInBuildSettings - 2) {
 			day++;
 			currentScene = 1;
-			if (day == 5) {
-				SceneManager.LoadScene(11); // End Scene
+			if (day > 4) {
+				SceneManager.LoadScene("EndScene");
+			} else {
+				SceneManager.LoadScene(currentScene);
 			}
-			PlayNextTrack();
-			SceneManager.LoadScene(currentScene);
 		} else {
 			SceneManager.LoadScene(currentScene);
 		}
@@ -73,6 +73,12 @@ public class GameController : MonoBehaviour {
 		}
 		if (level == 10) {
 			PlayEndMusic();
+		}
+		if (level == 11) {
+			audioSource.Stop();
+			audioSource.clip = soundtracks[5];
+			audioSource.volume = 0.5f;
+			audioSource.Play();
 		}
 	}
 
