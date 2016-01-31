@@ -44,7 +44,7 @@ public class pan : MonoBehaviour {
     {
         if (col.gameObject.Equals(pancakeOtherSide))
         {
-            Debug.Log("Victory");
+            GameController.control.NextScene();
         }
     }
 }
