@@ -21,9 +21,9 @@ public class GameController : MonoBehaviour {
 
     void Awake()
     {
-        if (control == null || control != this)
+        if (control == null)
         {
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
             control = this;
         }
         else
@@ -45,7 +45,7 @@ public class GameController : MonoBehaviour {
         currentScene = currentScene + 1;
 		if (currentScene > SceneManager.sceneCountInBuildSettings) {
 			day++;
-			currentScene = 1;
+			currentScene = 0;
 			if (day == 9) {
 				SceneManager.LoadScene(0); // End Scene
 			}
