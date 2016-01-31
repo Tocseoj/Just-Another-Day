@@ -9,11 +9,9 @@ public class key : MonoBehaviour {
     public bool follow;
     private Vector3 mousePos;
     public bool inKeyHole;
-
+    public handle doorknob;
     public bool unlocked;
-
-	float nextScene = 0f;
-	bool next = false;
+	
 
     void Start()
     {
@@ -62,21 +60,8 @@ public class key : MonoBehaviour {
         }
         else if (unlocked)
         {
-            Debug.Log("Victory");
-			// GameController.control.hidden[7] = true;
-			Timer.staticTimer.StopClock();
-			StartTimer();
-			GameObject go = GameObject.Find("Check");
-			go.GetComponent<SpriteRenderer>().enabled = true;
-			go.GetComponent<AudioSource>().enabled = true;
+            doorknob.unlocked = true;
         }
-
-		if (next) {
-			if (nextScene < Time.time - 1/*seconds*/) {
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
-				GameController.control.NextScene();
-			}
-		}
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -88,11 +73,4 @@ public class key : MonoBehaviour {
             transform.position = keyHole.transform.position;
         }
     }
-
-	void StartTimer() {
-		if (!next) {
-			nextScene = Time.time;
-			next = true;
-		}
-	}
 }
