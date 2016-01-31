@@ -71,6 +71,9 @@ public class GameController : MonoBehaviour {
 		if (level == 1) {
 			PlayNextTrack();
 		}
+		if (level == 10) {
+			PlayEndMusic();
+		}
 	}
 
 	void PlayNextTrack() {
@@ -93,6 +96,13 @@ public class GameController : MonoBehaviour {
 		audioSource.Stop();
 		audioSource.clip = soundtracks[0];
 		audioSource.volume = 0.07f;
+		audioSource.Play();
+	}
+
+	void PlayEndMusic() {
+		audioSource.Stop();
+		audioSource.clip = soundtracks[4];
+		audioSource.volume = 0.5f;
 		audioSource.Play();
 	}
 
