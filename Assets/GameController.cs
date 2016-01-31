@@ -51,6 +51,11 @@ public class GameController : MonoBehaviour {
 		//
     }
 
+	void Update() {
+		if (Input.GetKey(KeyCode.Escape))
+			Application.Quit();
+	}
+
     public void NextScene()
     {
         currentScene = currentScene + 1;
