@@ -54,11 +54,11 @@ public class GameController : MonoBehaviour {
     public void NextScene()
     {
         currentScene = currentScene + 1;
-		if (currentScene > SceneManager.sceneCountInBuildSettings) {
+		if (currentScene > SceneManager.sceneCountInBuildSettings - 1) {
 			day++;
 			currentScene = 1;
-			if (day == 9) {
-				// SceneManager.LoadScene(0); // End Scene
+			if (day == 5) {
+				SceneManager.LoadScene(11); // End Scene
 			}
 			PlayNextTrack();
 			SceneManager.LoadScene(currentScene);
@@ -87,9 +87,9 @@ public class GameController : MonoBehaviour {
 		if (currentTrack == 3)
 			audioSource.volume = 0.5f;
 		audioSource.Play();
-		currentTrack++;
-		if (currentTrack >= soundtracks.Length - 1)
-			currentTrack = 1;
+		//currentTrack++;
+		//if (currentTrack >= soundtracks.Length - 2)
+		//	currentTrack = 1;
 	}
 
 	public void PlayMorningMusic() {
