@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour {
 	SpriteRenderer timerSprite;
 
 	float timer = 0f;
-	public int clock = 11;
+	public int clock = 10;
 
 	float nextSceneTimer = 0f;
 	bool next = false;

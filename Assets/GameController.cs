@@ -14,13 +14,22 @@ public class GameController : MonoBehaviour {
 	// Days
 	public int day = 0;
 	public int[] score = new int[10];
+	public int total {
+		get {
+			int t = 0;
+			for (int i = 0; i < score.Length; i++) {
+				t += score[i];
+			}
+			return t;
+		}
+	}
 	public bool[] hidden = new bool[10];
 	//
 
 	// Music
 	public AudioClip[] soundtracks;
 	int currentTrack = 0;
-	AudioSource audioSource;
+	public AudioSource audioSource;
 	//
 
     void Awake()
@@ -53,6 +62,7 @@ public class GameController : MonoBehaviour {
 			if (day == 9) {
 				SceneManager.LoadScene(0); // End Scene
 			}
+			PlayNextTrack();
 			SceneManager.LoadScene(currentScene);
 		} else {
 			SceneManager.LoadScene(currentScene);
@@ -66,7 +76,6 @@ public class GameController : MonoBehaviour {
 			audioSource.Play();
 		}
 		if (level == 1) {
-			audioSource.volume = 0.3f;
 			PlayNextTrack();
 		}
 	}
@@ -74,12 +83,20 @@ public class GameController : MonoBehaviour {
 	void PlayNextTrack() {
 		audioSource.Stop();
 		audioSource.clip = soundtracks[currentTrack];
+		audioSource.volume = 0.25f;
 		audioSource.Play();
-		float length = soundtracks[currentTrack].length + 0.2f;
+		// float length = soundtracks[currentTrack].length + 0.2f;
 		currentTrack++;
 		if (currentTrack >= soundtracks.Length)
 			currentTrack = 1;
-		Invoke("PlayNextTrack" , length);
+		// Invoke("PlayNextTrack" , length);
+	}
+
+	public void PlayMorningMusic() {
+		audioSource.Stop();
+		audioSource.clip = soundtracks[0];
+		audioSource.volume = 0.07f;
+		audioSource.Play();
 	}
 
     public void Save()

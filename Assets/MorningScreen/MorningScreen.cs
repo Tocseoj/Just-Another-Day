@@ -10,6 +10,7 @@ public class MorningScreen : MonoBehaviour {
 	public bool highlight;
 	public bool turningOn;
 	public Sprite[] states;
+	public int playSounds = 0;
 
 	float timer = 0f;
 
@@ -20,15 +21,17 @@ public class MorningScreen : MonoBehaviour {
 
 		if (alarmGoingOff <= clockTime)
 		{
-			if (!GetComponent<AudioSource>().isPlaying)
-				GetComponent<AudioSource>().Play();
-			else if (!GetComponent<AudioSource>().mute) {
-				if (timer < Time.time - 1) {
-					GetComponent<AudioSource>().volume -= 0.2f;
-					if (GetComponent<AudioSource>().volume <= 0) {
-						GetComponent<AudioSource>().mute = true;
+			if (playSounds != 0) {
+				if (!GetComponent<AudioSource>().isPlaying)
+					GetComponent<AudioSource>().Play();
+				else if (!GetComponent<AudioSource>().mute) {
+					if (timer < Time.time - 1) {
+						GetComponent<AudioSource>().volume -= 0.4f;
+						if (GetComponent<AudioSource>().volume <= 0) {
+							GetComponent<AudioSource>().mute = true;
+						}
+						timer = Time.time;
 					}
-					timer = Time.time;
 				}
 			}
 		}
