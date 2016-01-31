@@ -13,10 +13,13 @@ public class LightBulb : MonoBehaviour {
 
 	Rigidbody2D rb;
 	Transform lamp;
+	AudioSource aud;
 
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
-		Physics2D.IgnoreCollision(GetComponent<CircleCollider2D>(), box);
+		aud = GetComponent<AudioSource>();
+		if (box != null) 
+			Physics2D.IgnoreCollision(GetComponent<CircleCollider2D>(), box);
 	}
 
 	void Update () {
@@ -26,7 +29,12 @@ public class LightBulb : MonoBehaviour {
 		if (isIn) {
 			transform.position = lamp.position;
 			transform.rotation = lamp.rotation;
-			lightAura.enabled = true;
+			if (lightAura != null) {
+				lightAura.enabled = true;
+			}
+			if (name == "NewBulb") {
+				Debug.Log("Victory!");
+			}
 		}
 	}
 
@@ -43,5 +51,9 @@ public class LightBulb : MonoBehaviour {
 				lamp = other.transform;
 				isIn = true;			
 		}
+	}
+
+	void OnCollisionEnter2D(Collision2D other) {
+		aud.Play();
 	}
 }
