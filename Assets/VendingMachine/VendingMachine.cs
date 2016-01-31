@@ -15,6 +15,9 @@ public class VendingMachine : MonoBehaviour {
 
 	float timer = 0f;
 
+	float nextScene = 0f;
+	bool next = false;
+
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
 	}
@@ -40,11 +43,26 @@ public class VendingMachine : MonoBehaviour {
 				timer = Time.time;
 			}
 		}
+
+
+		if (next) {
+			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.NextScene();
+			}
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.name == "Snack") {
 			Debug.Log("Victory!");
+			StartTimer();
+		}
+	}
+
+	void StartTimer() {
+		if (!next) {
+			nextScene = Time.time;
+			next = true;
 		}
 	}
 }

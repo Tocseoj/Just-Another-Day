@@ -15,6 +15,9 @@ public class LightBulb : MonoBehaviour {
 	Transform lamp;
 	AudioSource aud;
 
+	float nextScene = 0f;
+	bool next = false;
+
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
 		aud = GetComponent<AudioSource>();
@@ -34,6 +37,14 @@ public class LightBulb : MonoBehaviour {
 			}
 			if (name == "NewBulb") {
 				Debug.Log("Victory!");
+				StartTimer();
+			}
+		}
+
+
+		if (next) {
+			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.NextScene();
 			}
 		}
 	}
@@ -55,5 +66,12 @@ public class LightBulb : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other) {
 		aud.Play();
+	}
+
+	void StartTimer() {
+		if (!next) {
+			nextScene = Time.time;
+			next = true;
+		}
 	}
 }

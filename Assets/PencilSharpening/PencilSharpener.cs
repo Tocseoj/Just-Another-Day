@@ -18,6 +18,9 @@ public class PencilSharpener : MonoBehaviour {
 	public int rotationsNeeded = 6;
 	bool sharpened = false;
 
+	float nextScene = 0f;
+	bool next = false;
+
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
 		lever = GameObject.Find("HandleParent").transform;
@@ -33,10 +36,17 @@ public class PencilSharpener : MonoBehaviour {
 
 		if (turnCounter >= rotationsNeeded) {
 			Debug.Log("VICTORY!");
+			StartTimer();
 			turnCounter = 0;
 			ps.Sharpen();
 			ps.enabled = true;
 			sharpened = true;
+		}
+
+		if (next) {
+			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.NextScene();
+			}
 		}
 	}
 
@@ -71,6 +81,13 @@ public class PencilSharpener : MonoBehaviour {
 			rb.MovePosition(Vector2.Lerp(transform.position, new Vector2(transform.position.x, Mathf.Clamp(mousePos.y + offset.y, lowerBound, upperBound)), Time.deltaTime * movementSpeed));
 
 			lever.localScale = new Vector3(1f, ((((transform.position.y - lowerBound) / (upperBound - lowerBound)) - 0.5f) * 2f), 1f);
+		}
+	}
+
+	void StartTimer() {
+		if (!next) {
+			nextScene = Time.time;
+			next = true;
 		}
 	}
 }
