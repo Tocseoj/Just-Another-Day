@@ -20,6 +20,7 @@ public class MouseInteract : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
+		rb.velocity = (Vector2.zero);
 		offset = transform.position - mousePos;
 	}
 
