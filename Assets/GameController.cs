@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour {
 		// Music
 		audioSource = GetComponent<AudioSource>();
 		audioSource.clip = soundtracks[currentTrack];
+		audioSource.volume = 0.07f;
 		audioSource.Play();
 		currentTrack = 1;;
 		//
@@ -47,6 +48,7 @@ public class GameController : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level) {
 		if (level == 1) {
+			audioSource.volume = 0.5f;
 			PlayNextTrack();
 		}
 	}
