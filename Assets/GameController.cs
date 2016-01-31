@@ -75,14 +75,18 @@ public class GameController : MonoBehaviour {
 
 	void PlayNextTrack() {
 		audioSource.Stop();
+		currentTrack = UnityEngine.Random.Range(1, 4);
 		audioSource.clip = soundtracks[currentTrack];
-		audioSource.volume = 0.25f;
+		if (currentTrack == 1)
+			audioSource.volume = 0.2f;
+		if (currentTrack == 2)
+			audioSource.volume = 0.25f;
+		if (currentTrack == 3)
+			audioSource.volume = 0.5f;
 		audioSource.Play();
-		// float length = soundtracks[currentTrack].length + 0.2f;
 		currentTrack++;
-		if (currentTrack >= soundtracks.Length)
+		if (currentTrack >= soundtracks.Length - 1)
 			currentTrack = 1;
-		// Invoke("PlayNextTrack" , length);
 	}
 
 	public void PlayMorningMusic() {
