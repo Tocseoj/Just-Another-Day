@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Accelerator : MonoBehaviour {
-    public float timeTillGreen = 2f;
+    public float timeTillGreen;
     public GameObject background;
     public GameObject accelerometerNeedle;
     public Sprite backgroundLightOn;
@@ -16,6 +16,7 @@ public class Accelerator : MonoBehaviour {
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        timeTillGreen = Random.Range(4,8);
     }
 
 	// Update is called once per frame

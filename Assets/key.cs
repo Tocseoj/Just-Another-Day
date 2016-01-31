@@ -39,7 +39,10 @@ public class key : MonoBehaviour {
             {
                 rb.velocity = (-transform.position + mousePos) * 5f;
                 sr.sprite = states[0];
+                if(transform.rotation.z != 0)
+                    transform.eulerAngles = new Vector3(0f, 0f, 0f);
             }
+
 
             if (transform.position.x > 300f)
                 transform.position = new Vector3(300f, transform.position.y, transform.position.z);
