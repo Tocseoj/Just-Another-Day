@@ -35,7 +35,7 @@ public class Player : MonoBehaviour {
                 Debug.Log("Victory!");
                 // GameController.control.hidden[2] = true;
                 
-                
+                StartTimer();
                 GameObject go = GameObject.Find("Check");
                 go.GetComponent<SpriteRenderer>().enabled = true;
                 go.GetComponent<AudioSource>().enabled = true;
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject == flag) {
             increaseVictoryOverlay = true;
-            StartTimer();
+            
             Timer.staticTimer.StopClock();
         }
 	}
