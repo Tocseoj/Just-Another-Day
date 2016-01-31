@@ -8,6 +8,12 @@ public class GameController : MonoBehaviour {
     public float playerScore;
     public int currentScene = 0;
 
+	// Music
+	public AudioClip[] soundtracks;
+	int currentTrack = 0;
+	AudioSource audioSource;
+	//
+
     void Awake()
     {
         if (control == null || control != this)
@@ -19,17 +25,40 @@ public class GameController : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
+		// Music
+		audioSource = GetComponent<AudioSource>();
+		audioSource.clip = soundtracks[currentTrack];
+		audioSource.Play();
+		currentTrack = 1;;
+		//
     }
 
     public void NextScene()
     {
         currentScene = currentScene + 1;
-        if (currentScene > SceneManager.sceneCountInBuildSettings)
-        {
-            currentScene = 1;
-            SceneManager.LoadScene(currentScene);
-        }
-        else
-            SceneManager.LoadScene(currentScene);
+		if (currentScene > SceneManager.sceneCountInBuildSettings) {
+			currentScene = 1;
+			SceneManager.LoadScene(currentScene);
+		} else {
+			SceneManager.LoadScene(currentScene);
+		}
     }
+
+	void OnLevelWasLoaded(int level) {
+		if (level == 1) {
+			PlayNextTrack();
+		}
+	}
+
+	void PlayNextTrack() {
+		audioSource.Stop();
+		audioSource.clip = soundtracks[currentTrack];
+		audioSource.Play();
+		float length = soundtracks[currentTrack].length + 0.2f;
+		currentTrack++;
+		if (currentTrack >= soundtracks.Length)
+			currentTrack = 1;
+		Invoke("PlayNextTrack" , length);
+	}
 }
