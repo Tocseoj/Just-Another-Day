@@ -38,8 +38,14 @@ public class PencilSharpener : MonoBehaviour {
 		if (turnCounter >= rotationsNeeded) {
 			if (ps.name == "Pencil") {
 				Debug.Log("VICTORY!");
+				GameObject go = GameObject.Find("Check");
+				go.GetComponent<SpriteRenderer>().enabled = true;
+				go.GetComponent<AudioSource>().enabled = true;
 			} else if (ps.name == "Pen") {
 				GameController.control.hidden[5] = true;
+				GameObject go = GameObject.Find("X");
+				go.GetComponent<SpriteRenderer>().enabled = true;
+				go.GetComponent<AudioSource>().enabled = true;
 			}
 			Timer.staticTimer.StopClock();
 			StartTimer();

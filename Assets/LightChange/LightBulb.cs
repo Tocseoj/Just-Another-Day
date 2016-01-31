@@ -37,8 +37,14 @@ public class LightBulb : MonoBehaviour {
 			}
 			if (name == "NewBulb") {
 				Debug.Log("VICTORY!");
+				GameObject go = GameObject.Find("Check");
+				go.GetComponent<SpriteRenderer>().enabled = true;
+				go.GetComponent<AudioSource>().enabled = true;
 			} else if (name == "BrokenBulb") {
 				GameController.control.hidden[7] = true;
+				GameObject go = GameObject.Find("X");
+				go.GetComponent<SpriteRenderer>().enabled = true;
+				go.GetComponent<AudioSource>().enabled = true;
 			}
 			Timer.staticTimer.StopClock();
 			StartTimer();

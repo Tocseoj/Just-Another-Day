@@ -8,15 +8,36 @@ public class Player : MonoBehaviour {
     public GameObject flag;
     public bool lookingRight = true;
 
+	float nextScene = 0f;
+	bool next = false;
+
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    
+		
+		if (next) {
+			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
+				GameController.control.NextScene();
+			}
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D other) {
+		if (other.gameObject == flag) {
+			Debug.Log("Victory!");
+			// GameController.control.hidden[2] = true;
+			StartTimer();
+			Timer.staticTimer.StopClock();
+			GameObject go = GameObject.Find("Check");
+			go.GetComponent<SpriteRenderer>().enabled = true;
+			go.GetComponent<AudioSource>().enabled = true;
+		}
 	}
 
     public void MoveRight()
@@ -43,4 +64,11 @@ public class Player : MonoBehaviour {
         lookingRight = !lookingRight;
         sr.flipX = !sr.flipX;
     }
+
+	void StartTimer() {
+		if (!next) {
+			nextScene = Time.time;
+			next = true;
+		}
+	}
 }

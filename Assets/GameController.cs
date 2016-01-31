@@ -46,9 +46,7 @@ public class GameController : MonoBehaviour {
 
 		// Music
 		audioSource = GetComponent<AudioSource>();
-		audioSource.clip = soundtracks[0];
-		audioSource.volume = 0.07f;
-		audioSource.Play();
+		PlayMorningMusic();
 		currentTrack = 1;
 		//
     }
@@ -60,7 +58,7 @@ public class GameController : MonoBehaviour {
 			day++;
 			currentScene = 1;
 			if (day == 9) {
-				SceneManager.LoadScene(0); // End Scene
+				// SceneManager.LoadScene(0); // End Scene
 			}
 			PlayNextTrack();
 			SceneManager.LoadScene(currentScene);
@@ -70,11 +68,6 @@ public class GameController : MonoBehaviour {
     }
 
 	void OnLevelWasLoaded(int level) {
-		if (level == 0 || level == 10) {
-			audioSource.Stop();
-			audioSource.clip = soundtracks[0];
-			audioSource.Play();
-		}
 		if (level == 1) {
 			PlayNextTrack();
 		}

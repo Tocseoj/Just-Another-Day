@@ -66,6 +66,9 @@ public class key : MonoBehaviour {
 			// GameController.control.hidden[7] = true;
 			Timer.staticTimer.StopClock();
 			StartTimer();
+			GameObject go = GameObject.Find("Check");
+			go.GetComponent<SpriteRenderer>().enabled = true;
+			go.GetComponent<AudioSource>().enabled = true;
         }
 
 		if (next) {

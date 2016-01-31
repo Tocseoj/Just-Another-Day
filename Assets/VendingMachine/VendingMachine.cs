@@ -58,6 +58,9 @@ public class VendingMachine : MonoBehaviour {
 			Debug.Log("VICTORY!");
 			Timer.staticTimer.StopClock();
 			StartTimer();
+			GameObject go = GameObject.Find("Check");
+			go.GetComponent<SpriteRenderer>().enabled = true;
+			go.GetComponent<AudioSource>().enabled = true;
 		}
 	}
 

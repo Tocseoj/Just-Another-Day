@@ -52,11 +52,17 @@ public class Accelerator : MonoBehaviour {
             {
                 accelerometerNeedle.transform.Rotate(new Vector3(0f,0f,0.15f));
                 Debug.Log("Victory");
+				GameObject go = GameObject.Find("Check");
+				go.GetComponent<SpriteRenderer>().enabled = true;
+				go.GetComponent<AudioSource>().enabled = true;
             }
             else
             {
                 Debug.Log("Fail");
 				GameController.control.hidden[4] = true;
+				GameObject go = GameObject.Find("X");
+				go.GetComponent<SpriteRenderer>().enabled = true;
+				go.GetComponent<AudioSource>().enabled = true;
             }
 			Timer.staticTimer.StopClock();
 			StartTimer();

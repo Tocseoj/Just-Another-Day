@@ -30,8 +30,14 @@ public class CoffeeCup : MonoBehaviour {
 			transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullCoffeeBack;
 			if (name == "Mug") {
 				Debug.Log("VICTORY!");
+				GameObject go = GameObject.Find("Check");
+				go.GetComponent<SpriteRenderer>().enabled = true;
+				go.GetComponent<AudioSource>().enabled = true;
 			} else if (name == "Vase") {
 				GameController.control.hidden[2] = true;
+				GameObject go = GameObject.Find("X");
+				go.GetComponent<SpriteRenderer>().enabled = true;
+				go.GetComponent<AudioSource>().enabled = true;
 			}
 			StartTimer();
 			Timer.staticTimer.StopClock();

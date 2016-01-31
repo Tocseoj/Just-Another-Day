@@ -34,6 +34,9 @@ public class Timer : MonoBehaviour {
 				timer = Time.time;
 				if (clock == 0) {
 					StartTimer();
+					GameObject go = GameObject.Find("X");
+					go.GetComponent<SpriteRenderer>().enabled = true;
+					go.GetComponent<AudioSource>().enabled = true;
 				}
 			}
 		}
@@ -63,6 +66,5 @@ public class Timer : MonoBehaviour {
 
 	public void StopClock() {
 		stopped = true;
-
 	}
 }
