@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour {
 	SpriteRenderer timerSprite;
 
 	float timer = 0f;
-	public int clock = 11;
+	public int clock = 10;
 
 	float nextSceneTimer = 0f;
 	bool next = false;
@@ -34,6 +34,9 @@ public class Timer : MonoBehaviour {
 				timer = Time.time;
 				if (clock == 0) {
 					StartTimer();
+					GameObject go = GameObject.Find("X");
+					go.GetComponent<SpriteRenderer>().enabled = true;
+					go.GetComponent<AudioSource>().enabled = true;
 				}
 			}
 		}
@@ -48,7 +51,7 @@ public class Timer : MonoBehaviour {
 				}
 				doOnce = false;
 			}
-			if (nextSceneTimer < Time.time - 3/*seconds*/) {
+			if (nextSceneTimer < Time.time - 1/*seconds*/) {
 				GameController.control.NextScene();
 			}
 		}
@@ -63,6 +66,5 @@ public class Timer : MonoBehaviour {
 
 	public void StopClock() {
 		stopped = true;
-
 	}
 }

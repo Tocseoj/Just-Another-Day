@@ -57,6 +57,9 @@ public class pan : MonoBehaviour {
 			// GameController.control.hidden[3] = true;
 			Timer.staticTimer.StopClock();
 			StartTimer();
+			GameObject go = GameObject.Find("Check");
+			go.GetComponent<SpriteRenderer>().enabled = true;
+			go.GetComponent<AudioSource>().enabled = true;
             // GameController.control.NextScene();
         }
     }

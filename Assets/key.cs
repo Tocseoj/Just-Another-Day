@@ -66,10 +66,13 @@ public class key : MonoBehaviour {
 			// GameController.control.hidden[7] = true;
 			Timer.staticTimer.StopClock();
 			StartTimer();
+			GameObject go = GameObject.Find("Check");
+			go.GetComponent<SpriteRenderer>().enabled = true;
+			go.GetComponent<AudioSource>().enabled = true;
         }
 
 		if (next) {
-			if (nextScene < Time.time - 3/*seconds*/) {
+			if (nextScene < Time.time - 1/*seconds*/) {
 				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
 				GameController.control.NextScene();
 			}
