@@ -12,6 +12,9 @@ public class key : MonoBehaviour {
 
     public bool unlocked;
 
+	float nextScene = 0f;
+	bool next = false;
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -60,7 +63,17 @@ public class key : MonoBehaviour {
         else if (unlocked)
         {
             Debug.Log("Victory");
+			// GameController.control.hidden[7] = true;
+			Timer.staticTimer.StopClock();
+			StartTimer();
         }
+
+		if (next) {
+			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
+				GameController.control.NextScene();
+			}
+		}
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -72,4 +85,11 @@ public class key : MonoBehaviour {
             transform.position = keyHole.transform.position;
         }
     }
+
+	void StartTimer() {
+		if (!next) {
+			nextScene = Time.time;
+			next = true;
+		}
+	}
 }

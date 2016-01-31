@@ -10,6 +10,9 @@ public class Accelerator : MonoBehaviour {
     public float timeBetweenHorns = 0.5f;
     public AudioSource audioSource;
 
+	float nextScene = 0f;
+	bool next = false;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -32,6 +35,13 @@ public class Accelerator : MonoBehaviour {
             }
             */
         }
+
+		if (next) {
+			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
+				GameController.control.NextScene();
+			}
+		}
 	}
 
     void OnMouseOver()
@@ -46,7 +56,17 @@ public class Accelerator : MonoBehaviour {
             else
             {
                 Debug.Log("Fail");
+				GameController.control.hidden[4] = true;
             }
+			Timer.staticTimer.StopClock();
+			StartTimer();
         }
     }
+
+	void StartTimer() {
+		if (!next) {
+			nextScene = Time.time;
+			next = true;
+		}
+	}
 }

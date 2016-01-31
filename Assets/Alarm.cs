@@ -12,6 +12,9 @@ public class Alarm : MonoBehaviour {
     public float nextSceneIn = 2f;
     public float timeTillNext;
 
+	float nextScene = 0f;
+	bool next = false;
+
 	// Use this for initialization
 	void Start () {
         clockSR = clock.GetComponent<SpriteRenderer>();
@@ -36,9 +39,18 @@ public class Alarm : MonoBehaviour {
             timeTillNext += Time.deltaTime;
             if (timeTillNext >= nextSceneIn)
             {
-                GameController.control.NextScene();
+				// GameController.control.hidden[7] = true;
+				Timer.staticTimer.StopClock();
+				StartTimer();
             }
         }
+
+		if (next) {
+			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
+				GameController.control.NextScene();
+			}
+		}
 	}
 
     void OnCollisionEnter2D(Collision2D other)
@@ -66,4 +78,11 @@ public class Alarm : MonoBehaviour {
             animate();
         }
     }
+
+	void StartTimer() {
+		if (!next) {
+			nextScene = Time.time;
+			next = true;
+		}
+	}
 }

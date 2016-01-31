@@ -14,6 +14,7 @@ public class CoffeeCup : MonoBehaviour {
 	void Update() {
 		if (next) {
 			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
 				GameController.control.NextScene();
 			}
 		}
@@ -29,7 +30,6 @@ public class CoffeeCup : MonoBehaviour {
 			transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullCoffeeBack;
 			if (name == "Mug") {
 				Debug.Log("VICTORY!");
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
 			} else if (name == "Vase") {
 				GameController.control.hidden[2] = true;
 			}

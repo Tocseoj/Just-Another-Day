@@ -37,7 +37,6 @@ public class LightBulb : MonoBehaviour {
 			}
 			if (name == "NewBulb") {
 				Debug.Log("VICTORY!");
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
 			} else if (name == "BrokenBulb") {
 				GameController.control.hidden[7] = true;
 			}
@@ -48,6 +47,7 @@ public class LightBulb : MonoBehaviour {
 
 		if (next) {
 			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
 				GameController.control.NextScene();
 			}
 		}

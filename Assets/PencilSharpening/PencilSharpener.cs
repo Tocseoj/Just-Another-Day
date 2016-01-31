@@ -38,7 +38,6 @@ public class PencilSharpener : MonoBehaviour {
 		if (turnCounter >= rotationsNeeded) {
 			if (ps.name == "Pencil") {
 				Debug.Log("VICTORY!");
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
 			} else if (ps.name == "Pen") {
 				GameController.control.hidden[5] = true;
 			}
@@ -53,6 +52,7 @@ public class PencilSharpener : MonoBehaviour {
 
 		if (next) {
 			if (nextScene < Time.time - 3/*seconds*/) {
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
 				GameController.control.NextScene();
 			}
 		}

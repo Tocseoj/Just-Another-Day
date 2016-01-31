@@ -4,14 +4,14 @@ using System.Collections;
 public class Wheel : MonoBehaviour
 {
     private bool follow = false;
-    private Rigidbody2D rb;
+    // private Rigidbody2D rb;
     public GameObject pancakeOtherSide;
     public Vector3 mousePos;
     public Vector3 oldMousePos;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        // rb = GetComponent<Rigidbody2D>();
     }
 
     void OnMouseOver()
