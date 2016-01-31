@@ -48,7 +48,7 @@ public class Timer : MonoBehaviour {
 				}
 				doOnce = false;
 			}
-			if (nextSceneTimer < Time.time - 3/*seconds*/) {
+			if (nextSceneTimer < Time.time - 1/*seconds*/) {
 				GameController.control.NextScene();
 			}
 		}

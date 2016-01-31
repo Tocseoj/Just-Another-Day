@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour {
         currentScene = currentScene + 1;
 		if (currentScene > SceneManager.sceneCountInBuildSettings) {
 			day++;
-			currentScene = 0;
+			currentScene = 1;
 			if (day == 9) {
 				SceneManager.LoadScene(0); // End Scene
 			}
@@ -60,13 +60,13 @@ public class GameController : MonoBehaviour {
     }
 
 	void OnLevelWasLoaded(int level) {
-		if (level == 0) {
+		if (level == 0 || level == 10) {
 			audioSource.Stop();
 			audioSource.clip = soundtracks[0];
 			audioSource.Play();
 		}
 		if (level == 1) {
-			audioSource.volume = 0.5f;
+			audioSource.volume = 0.3f;
 			PlayNextTrack();
 		}
 	}

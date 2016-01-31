@@ -69,7 +69,7 @@ public class key : MonoBehaviour {
         }
 
 		if (next) {
-			if (nextScene < Time.time - 3/*seconds*/) {
+			if (nextScene < Time.time - 1/*seconds*/) {
 				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
 				GameController.control.NextScene();
 			}

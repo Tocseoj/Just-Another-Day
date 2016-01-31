@@ -24,7 +24,7 @@ public class MorningScreen : MonoBehaviour {
 				GetComponent<AudioSource>().Play();
 			else if (!GetComponent<AudioSource>().mute) {
 				if (timer < Time.time - 1) {
-					GetComponent<AudioSource>().volume -= 0.1f;
+					GetComponent<AudioSource>().volume -= 0.2f;
 					if (GetComponent<AudioSource>().volume <= 0) {
 						GetComponent<AudioSource>().mute = true;
 					}
