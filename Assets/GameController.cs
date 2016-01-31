@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -77,4 +81,49 @@ public class GameController : MonoBehaviour {
 			currentTrack = 1;
 		Invoke("PlayNextTrack" , length);
 	}
+
+    public void Save()
+    {
+        //Load in the file
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
+
+        // Brings in the SaveData 
+        SaveData data = new SaveData();
+
+        // Save to SaveData here
+        data.setHighScores(score);
+
+        // Loads file with data.
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    public void Load()
+    {
+        if (File.Exists(Application.persistentDataPath + "/saveData.dat"))
+        {
+            //Don't worry about this too much.
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/saveData.dat", FileMode.Open);
+            SaveData data = (SaveData)bf.Deserialize(file);
+            file.Close();
+
+            //Load in the data from the file
+            score = data.getHighScores();
+        }
+    }
+}
+
+[Serializable]
+class SaveData
+{
+    //Variable save locations. Private so people can't change them.
+    private int[] highScores;
+
+    //Set Variables
+    public void setHighScores(int[] b) { highScores = b; }
+
+    //Get Variables
+    public int[] getHighScores() { return highScores; }
 }
