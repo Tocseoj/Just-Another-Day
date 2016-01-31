@@ -36,10 +36,13 @@ public class LightBulb : MonoBehaviour {
 				lightAura.enabled = true;
 			}
 			if (name == "NewBulb") {
-				Debug.Log("Victory!");
-				Timer.staticTimer.StopClock();
-				StartTimer();
+				Debug.Log("VICTORY!");
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
+			} else if (name == "BrokenBulb") {
+				GameController.control.hidden[7] = true;
 			}
+			Timer.staticTimer.StopClock();
+			StartTimer();
 		}
 
 

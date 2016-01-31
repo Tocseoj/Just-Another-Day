@@ -17,6 +17,7 @@ public class PencilSharpener : MonoBehaviour {
 	PencilSharpening ps;
 	public int rotationsNeeded = 6;
 	bool sharpened = false;
+	public BoxCollider2D trigger;
 
 	float nextScene = 0f;
 	bool next = false;
@@ -35,13 +36,19 @@ public class PencilSharpener : MonoBehaviour {
 		}
 
 		if (turnCounter >= rotationsNeeded) {
-			Debug.Log("VICTORY!");
+			if (ps.name == "Pencil") {
+				Debug.Log("VICTORY!");
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
+			} else if (ps.name == "Pen") {
+				GameController.control.hidden[5] = true;
+			}
 			Timer.staticTimer.StopClock();
 			StartTimer();
 			turnCounter = 0;
 			ps.Sharpen();
 			ps.enabled = true;
 			sharpened = true;
+			engaged = false;
 		}
 
 		if (next) {

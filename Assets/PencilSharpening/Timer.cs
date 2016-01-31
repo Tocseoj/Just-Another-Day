@@ -10,11 +10,13 @@ public class Timer : MonoBehaviour {
 	SpriteRenderer timerSprite;
 
 	float timer = 0f;
-	int clock = 11;
+	public int clock = 11;
 
-	float nextScene = 0f;
+	float nextSceneTimer = 0f;
 	bool next = false;
 	public bool stopped = false;
+
+	bool doOnce = true;
 
 	// Use this for initialization
 	void Awake () {
@@ -37,7 +39,16 @@ public class Timer : MonoBehaviour {
 		}
 
 		if (next) {
-			if (nextScene < Time.time - 3/*seconds*/) {
+			if (doOnce) {
+				GameObject light = GameObject.Find("VendingMachineLight");
+				if (light != null) {
+					if (light.GetComponent<SpriteRenderer>().enabled == true) {
+						GameController.control.hidden[6] = true;
+					}
+				}
+				doOnce = false;
+			}
+			if (nextSceneTimer < Time.time - 3/*seconds*/) {
 				GameController.control.NextScene();
 			}
 		}
@@ -45,12 +56,13 @@ public class Timer : MonoBehaviour {
 
 	void StartTimer() {
 		if (!next) {
-			nextScene = Time.time;
+			nextSceneTimer = Time.time;
 			next = true;
 		}
 	}
 
 	public void StopClock() {
 		stopped = true;
+
 	}
 }

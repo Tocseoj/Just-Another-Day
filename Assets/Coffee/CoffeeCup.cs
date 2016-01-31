@@ -26,10 +26,15 @@ public class CoffeeCup : MonoBehaviour {
 		}
 
 		if (count >= winAmt) {
-			Debug.Log("YOU WIN!");
+			transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullCoffeeBack;
+			if (name == "Mug") {
+				Debug.Log("VICTORY!");
+				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
+			} else if (name == "Vase") {
+				GameController.control.hidden[2] = true;
+			}
 			StartTimer();
 			Timer.staticTimer.StopClock();
-			transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullCoffeeBack;
 		}
 	}
 
