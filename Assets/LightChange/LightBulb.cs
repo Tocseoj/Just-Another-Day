@@ -37,6 +37,7 @@ public class LightBulb : MonoBehaviour {
 			}
 			if (name == "NewBulb") {
 				Debug.Log("Victory!");
+				Timer.staticTimer.StopClock();
 				StartTimer();
 			}
 		}

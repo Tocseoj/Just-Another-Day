@@ -36,6 +36,7 @@ public class PencilSharpener : MonoBehaviour {
 
 		if (turnCounter >= rotationsNeeded) {
 			Debug.Log("VICTORY!");
+			Timer.staticTimer.StopClock();
 			StartTimer();
 			turnCounter = 0;
 			ps.Sharpen();

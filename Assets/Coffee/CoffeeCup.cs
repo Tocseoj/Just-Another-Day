@@ -28,6 +28,7 @@ public class CoffeeCup : MonoBehaviour {
 		if (count >= winAmt) {
 			Debug.Log("YOU WIN!");
 			StartTimer();
+			Timer.staticTimer.StopClock();
 			transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullCoffeeBack;
 		}
 	}

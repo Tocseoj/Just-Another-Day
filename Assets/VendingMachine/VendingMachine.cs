@@ -55,6 +55,7 @@ public class VendingMachine : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.name == "Snack") {
 			Debug.Log("Victory!");
+			Timer.staticTimer.StopClock();
 			StartTimer();
 		}
 	}
