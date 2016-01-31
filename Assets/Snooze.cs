@@ -13,7 +13,7 @@ public class Snooze : MonoBehaviour {
             shrinking = true;
 
         if (shrinking)
-            transform.localScale = transform.localScale - Vector3.one*0.02f;
+            transform.localScale = transform.localScale - Vector3.one * 0.02f;
         else
             transform.localScale = transform.localScale + Vector3.one * 0.02f;
 
