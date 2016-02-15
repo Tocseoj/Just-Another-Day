@@ -11,9 +11,6 @@ public class Player : MonoBehaviour {
     public GameObject victoryOverlay;
     public GameObject glasses;
 
-	float nextScene = 0f;
-	bool next = false;
-
 	// Use this for initialization
 	void Awake () {
         rb = GetComponent<Rigidbody2D>();
@@ -32,22 +29,9 @@ public class Player : MonoBehaviour {
             }
             else
             {
-                Debug.Log("Victory!");
-                // GameController.control.hidden[2] = true;
-                
-                StartTimer();
-                GameObject go = GameObject.Find("Check");
-                go.GetComponent<SpriteRenderer>().enabled = true;
-                go.GetComponent<AudioSource>().enabled = true;
+				GameController.control.PlayerWon(2f);	// Victory Condition
             }
         }
-
-		if (next) {
-			if (nextScene < Time.time - 3/*seconds*/) {
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
-				GameController.control.NextScene();
-			}
-		}
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
@@ -82,11 +66,4 @@ public class Player : MonoBehaviour {
         lookingRight = !lookingRight;
         sr.flipX = !sr.flipX;
     }
-
-	void StartTimer() {
-		if (!next) {
-			nextScene = Time.time;
-			next = true;
-		}
-	}
 }

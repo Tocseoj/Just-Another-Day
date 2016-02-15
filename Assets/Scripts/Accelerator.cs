@@ -10,9 +10,6 @@ public class Accelerator : MonoBehaviour {
     public float timeBetweenHorns = 0.5f;
     public AudioSource audioSource;
 
-	float nextScene = 0f;
-	bool next = false;
-
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -36,13 +33,6 @@ public class Accelerator : MonoBehaviour {
             }
             */
         }
-
-		if (next) {
-			if (nextScene < Time.time - 1/*seconds*/) {
-				GameController.control.score[GameController.control.day] += 5 * 10;
-				GameController.control.NextScene();
-			}
-		}
 	}
 
     void OnMouseOver()
@@ -52,28 +42,12 @@ public class Accelerator : MonoBehaviour {
             if (timeTillGreen <= 0f)
             {
                 accelerometerNeedle.transform.Rotate(new Vector3(0f,0f,0.15f));
-                Debug.Log("Victory");
-				GameObject go = GameObject.Find("Check");
-				go.GetComponent<SpriteRenderer>().enabled = true;
-				go.GetComponent<AudioSource>().enabled = true;
+				GameController.control.PlayerWon(2f);	// Victory Condition
             }
             else
             {
-                Debug.Log("Fail");
-				GameController.control.hidden[4] = true;
-				GameObject go = GameObject.Find("X");
-				go.GetComponent<SpriteRenderer>().enabled = true;
-				go.GetComponent<AudioSource>().enabled = true;
+				GameController.control.PlayerLost(2f);
             }
-			Timer.staticTimer.StopClock();
-			StartTimer();
         }
     }
-
-	void StartTimer() {
-		if (!next) {
-			nextScene = Time.time;
-			next = true;
-		}
-	}
 }

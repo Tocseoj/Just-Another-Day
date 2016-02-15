@@ -15,9 +15,6 @@ public class VendingMachine : MonoBehaviour {
 
 	float timer = 0f;
 
-	float nextScene = 0f;
-	bool next = false;
-
 	void Awake() {
 		rb = GetComponent<Rigidbody2D>();
 	}
@@ -43,31 +40,11 @@ public class VendingMachine : MonoBehaviour {
 				timer = Time.time;
 			}
 		}
-
-
-		if (next) {
-			if (nextScene < Time.time - 3/*seconds*/) {
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
-				GameController.control.NextScene();
-			}
-		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.name == "Snack") {
-			Debug.Log("VICTORY!");
-			Timer.staticTimer.StopClock();
-			StartTimer();
-			GameObject go = GameObject.Find("Check");
-			go.GetComponent<SpriteRenderer>().enabled = true;
-			go.GetComponent<AudioSource>().enabled = true;
-		}
-	}
-
-	void StartTimer() {
-		if (!next) {
-			nextScene = Time.time;
-			next = true;
+			GameController.control.PlayerWon(3f);
 		}
 	}
 }

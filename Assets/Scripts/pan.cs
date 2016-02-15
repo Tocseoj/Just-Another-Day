@@ -7,9 +7,6 @@ public class pan : MonoBehaviour {
     public GameObject pancakeOtherSide;
     public Vector3 mousePos;
 
-	float nextScene = 0f;
-	bool next = false;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,33 +38,13 @@ public class pan : MonoBehaviour {
             transform.position = new Vector3(transform.position.x, 41f, transform.position.z);
         else if (transform.position.y < -41f)
             transform.position = new Vector3(transform.position.x, -41f, transform.position.z);
-
-		if (next) {
-			if (nextScene < Time.time - 3/*seconds*/) {
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
-				GameController.control.NextScene();
-			}
-		}
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.Equals(pancakeOtherSide))
         {
-			// GameController.control.hidden[3] = true;
-			Timer.staticTimer.StopClock();
-			StartTimer();
-			GameObject go = GameObject.Find("Check");
-			go.GetComponent<SpriteRenderer>().enabled = true;
-			go.GetComponent<AudioSource>().enabled = true;
-            // GameController.control.NextScene();
+			GameController.control.PlayerWon(3f);
         }
     }
-
-	void StartTimer() {
-		if (!next) {
-			nextScene = Time.time;
-			next = true;
-		}
-	}
 }

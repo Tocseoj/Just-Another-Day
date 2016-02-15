@@ -9,11 +9,6 @@ public class Alarm : MonoBehaviour {
     public int currentSprite = 0;
     public Sprite[] frames;
     private int changeEveryFrames;
-    public float nextSceneIn = 2f;
-    public float timeTillNext;
-
-	float nextScene = 0f;
-	bool next = false;
 
 	// Use this for initialization
 	void Start () {
@@ -36,25 +31,8 @@ public class Alarm : MonoBehaviour {
         }
         else
         {
-            timeTillNext += Time.deltaTime;
-            if (timeTillNext >= nextSceneIn)
-            {
-				
-            }
-			// GameController.control.hidden[7] = true;
-			Timer.staticTimer.StopClock();
-			StartTimer();
-			GameObject go = GameObject.Find("Check");
-			go.GetComponent<SpriteRenderer>().enabled = true;
-			go.GetComponent<AudioSource>().enabled = true;
+			GameController.control.PlayerWon(2f);	// Victory Condition
         }
-
-		if (next) {
-			if (nextScene < Time.time - 1/*seconds*/) {
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
-				GameController.control.NextScene();
-			}
-		}
 	}
 
     void OnCollisionEnter2D(Collision2D other)
@@ -82,11 +60,4 @@ public class Alarm : MonoBehaviour {
             animate();
         }
     }
-
-	void StartTimer() {
-		if (!next) {
-			nextScene = Time.time;
-			next = true;
-		}
-	}
 }

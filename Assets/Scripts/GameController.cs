@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour {
     public static GameController control;
     public int currentScene = 0;
 
+	private int victoryState; // 1 if won, -1 if lost, 0 otherwise
+
 	// Days
 	public int day = 0;
 	public int[] score = new int[10];
@@ -24,7 +26,6 @@ public class GameController : MonoBehaviour {
 		}
 	}
 	public bool[] hidden = new bool[10];
-	//
 
 	// Music
 	public AudioClip[] soundtracks;
@@ -56,9 +57,19 @@ public class GameController : MonoBehaviour {
 			Application.Quit();
 	}
 
+	public void NextScene(float delay) {
+		StartCoroutine(_NextScene(delay));
+	}
+	IEnumerator _NextScene(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		NextScene();
+	}
+
     public void NextScene()
     {
         currentScene = currentScene + 1;
+		victoryState = 0;
 		if (currentScene > SceneManager.sceneCountInBuildSettings - 2) {
 			day++;
 			currentScene = 1;
@@ -87,6 +98,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	// Music Methods
 	void PlayNextTrack() {
 		audioSource.Stop();
 		currentTrack = UnityEngine.Random.Range(1, 4);
@@ -98,9 +110,6 @@ public class GameController : MonoBehaviour {
 		if (currentTrack == 3)
 			audioSource.volume = 0.5f;
 		audioSource.Play();
-		//currentTrack++;
-		//if (currentTrack >= soundtracks.Length - 2)
-		//	currentTrack = 1;
 	}
 
 	public void PlayMorningMusic() {
@@ -117,6 +126,44 @@ public class GameController : MonoBehaviour {
 		audioSource.Play();
 	}
 
+	// Scene Victory Methods
+	public void PlayerWon(float delay) {
+		if (victoryState == 0) {
+			victoryState = 1;
+			// DISPLAY CHECKMARK
+			GameObject go = GameObject.Find("Check");			// Not really Efficient
+			go.GetComponent<SpriteRenderer>().enabled = true;
+			go.GetComponent<AudioSource>().enabled = true;
+
+			// Stop Clock
+			Timer.staticTimer.StopClock();
+
+			// Add score and change scene
+			score[day] += Timer.staticTimer.clock * 10;
+			NextScene(delay);
+		}
+	}
+	public void PlayerWon() {
+		PlayerWon(0);
+	}
+
+	public void PlayerLost(float delay) {
+		if (victoryState == 0) {
+			victoryState = -1;
+			// DISPLAY 'X'
+			GameObject go = GameObject.Find("X");				// Not efficient?
+			go.GetComponent<SpriteRenderer>().enabled = true;
+			go.GetComponent<AudioSource>().enabled = true;
+
+			// Add score and change scene
+			NextScene(delay);
+		}
+	}
+	public void PlayerLost() {
+		PlayerLost(0);
+	}
+
+	// Save Methods
     public void Save()
     {
         //Load in the file

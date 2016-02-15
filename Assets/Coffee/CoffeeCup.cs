@@ -8,53 +8,25 @@ public class CoffeeCup : MonoBehaviour {
 
 	int count;
 
-	float nextScene = 0f;
-	bool next = false;
-
-	void Update() {
-		if (next) {
-			if (nextScene < Time.time - 3/*seconds*/) {
-				GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
-				GameController.control.NextScene();
-			}
-		}
-	}
-
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "Coffee") {
 			count++;
-			// Debug.Log("Count: " + count);
 		}
 
 		if (count >= winAmt) {
 			transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullCoffeeBack;
 			if (name == "Mug") {
-				Debug.Log("VICTORY!");
-				GameObject go = GameObject.Find("Check");
-				go.GetComponent<SpriteRenderer>().enabled = true;
-				go.GetComponent<AudioSource>().enabled = true;
+				Debug.Log("Victory!");
+				GameController.control.PlayerWon(2f);	// Victory Condition
 			} else if (name == "Vase") {
-				GameController.control.hidden[2] = true;
-				GameObject go = GameObject.Find("X");
-				go.GetComponent<SpriteRenderer>().enabled = true;
-				go.GetComponent<AudioSource>().enabled = true;
+				GameController.control.PlayerLost(2f);
 			}
-			StartTimer();
-			Timer.staticTimer.StopClock();
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.tag == "Coffee") {
 			count--;
-			// Debug.Log("Count: " + count);
-		}
-	}
-
-	void StartTimer() {
-		if (!next) {
-			nextScene = Time.time;
-			next = true;
 		}
 	}
 }
