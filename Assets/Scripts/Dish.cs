@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Newspaper : MonoBehaviour {
-
-    public GameObject fly;
+public class Dish : MonoBehaviour {
     private Rigidbody2D rb;
     public Vector3 mousePos;
     float nextScene = 0f;
     bool next = false;
     private bool follow;
-    private int numberOfFlies = 10;
+    public float percentClean;
+    public Sprite clean;
 
     void Start()
     {
@@ -43,41 +42,17 @@ public class Newspaper : MonoBehaviour {
         else if (transform.position.y < -41f)
             transform.position = new Vector3(transform.position.x, -41f, transform.position.z);
 
-        if (next)
+        if (percentClean >= 100)
         {
-            if (nextScene < Time.time - 3/*seconds*/)
-            {
-                GameController.control.score[GameController.control.day] += Timer.staticTimer.clock * 10;
-                GameController.control.NextScene();
-            }
+            GetComponent<SpriteRenderer>().sprite = clean;
         }
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        if (col.gameObject.tag.Equals("Fly") && col.relativeVelocity.magnitude > 1f)
+        if (other.gameObject.tag.Equals("Water"))
         {
-            col.gameObject.GetComponent<Fly>().kill();
-            numberOfFlies -= 1;
-            if (numberOfFlies <= 0)
-            {
-                // GameController.control.hidden[3] = true;
-                Timer.staticTimer.StopClock();
-                StartTimer();
-                GameObject go = GameObject.Find("Check");
-                go.GetComponent<SpriteRenderer>().enabled = true;
-                go.GetComponent<AudioSource>().enabled = true;
-                // GameController.control.NextScene();
-            }
-        }
-    }
-
-    void StartTimer()
-    {
-        if (!next)
-        {
-            nextScene = Time.time;
-            next = true;
+            percentClean += 0.1f;
         }
     }
 }
